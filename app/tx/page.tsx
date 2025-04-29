@@ -7,15 +7,15 @@ import {
   IconCircleXFilled,
   IconLoader2,
 } from "@tabler/icons-react";
+import Link from "next/link";
 import {
   unstable_ViewTransition as ViewTransition,
   startTransition,
   useState,
 } from "react";
+import { TX_TITLE } from "~/shared-name";
 import { cn } from "~/utils/style";
 import "./view-transitions.css";
-import { TX_TITLE } from "~/shared-name";
-import Link from "next/link";
 
 const stateOptions = ["idle", "analyzing", "success", "error"] as const;
 
@@ -126,18 +126,22 @@ function StateBanner({
         )}
       >
         {/* Icons */}
-        <Icon
-          className={cn(
-            state === "error" &&
-              "motion-safe:animate-[500ms_ease-in-out_200ms_shake]",
-            iconClassName,
-          )}
-        />
+        <ViewTransition>
+          <Icon
+            className={cn(
+              state === "error" &&
+                "motion-safe:animate-[500ms_ease-in-out_200ms_shake]",
+              iconClassName,
+            )}
+          />
+        </ViewTransition>
 
         {/* Texts */}
-        <span className={cn("font-semibold", textColorClassName)}>
-          {description}
-        </span>
+        <ViewTransition key={state} enter="slide-in" exit="slide-out">
+          <div className={cn("font-semibold", textColorClassName)}>
+            {description}
+          </div>
+        </ViewTransition>
       </div>
     </ViewTransition>
   );
