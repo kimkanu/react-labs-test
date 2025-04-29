@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  IconChevronLeft,
   IconCircleCheckFilled,
   IconCircleLetterIFilled,
   IconCircleXFilled,
@@ -13,39 +14,68 @@ import {
 } from "react";
 import { cn } from "~/utils/style";
 import "./view-transitions.css";
+import { useRouter } from "next/navigation";
+import { TX_TITLE } from "~/shared-name";
+import Link from "next/link";
 
 const stateOptions = ["idle", "analyzing", "success", "error"] as const;
 
 export default function Component() {
+  const router = useRouter();
+
   const [state, setState] = useState<(typeof stateOptions)[number]>("idle");
 
   return (
-    <ViewTransition default="none">
-      <form className="mx-auto my-16 max-w-lg space-y-3">
-        <div className="flex gap-3">
-          {stateOptions.map((option) => (
-            <label
-              key={option}
-              className="flex gap-2 rounded-md px-2 py-1 transition-colors hover:bg-blue-600/10"
-            >
-              <input
-                type="radio"
-                name="state"
-                value={option}
-                checked={state === option}
-                onChange={() => {
-                  startTransition(() => {
-                    setState(option);
-                  });
-                }}
-              />
-              <span>{option}</span>
-            </label>
-          ))}
-        </div>
+    <ViewTransition>
+      <section className="mx-auto my-16 max-w-lg">
+        <header className="mb-8 flex gap-x-4">
+          <ViewTransition>
+            <Link href="/">
+              <button
+                type="button"
+                className="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-100 transition-colors hover:bg-slate-200"
+              >
+                <IconChevronLeft className="-translate-x-px size-7 text-slate-600" />
+              </button>
+            </Link>
+          </ViewTransition>
+          <ViewTransition name={TX_TITLE}>
+            <h1 className="font-extrabold text-3xl leading-10">
+              Transaction Status
+            </h1>
+          </ViewTransition>
+        </header>
 
-        <StateBanner state={state} />
-      </form>
+        <ViewTransition default="none">
+          <main>
+            <form className="space-y-3">
+              <div className="flex gap-3">
+                {stateOptions.map((option) => (
+                  <label
+                    key={option}
+                    className="flex gap-2 rounded-xl px-2 py-1 transition-colors hover:bg-blue-600/10"
+                  >
+                    <input
+                      type="radio"
+                      name="state"
+                      value={option}
+                      checked={state === option}
+                      onChange={() => {
+                        startTransition(() => {
+                          setState(option);
+                        });
+                      }}
+                    />
+                    <span>{option}</span>
+                  </label>
+                ))}
+              </div>
+
+              <StateBanner state={state} />
+            </form>
+          </main>
+        </ViewTransition>
+      </section>
     </ViewTransition>
   );
 }
@@ -91,7 +121,7 @@ function StateBanner({
   }[state];
 
   return (
-    <ViewTransition name="banner" default="width">
+    <ViewTransition default="width">
       <div
         className={cn(
           "flex w-fit items-center gap-2.5 rounded-full py-3 pr-6 pl-4",
