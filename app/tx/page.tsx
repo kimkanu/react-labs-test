@@ -14,15 +14,12 @@ import {
 } from "react";
 import { cn } from "~/utils/style";
 import "./view-transitions.css";
-import { useRouter } from "next/navigation";
 import { TX_TITLE } from "~/shared-name";
 import Link from "next/link";
 
 const stateOptions = ["idle", "analyzing", "success", "error"] as const;
 
 export default function Component() {
-  const router = useRouter();
-
   const [state, setState] = useState<(typeof stateOptions)[number]>("idle");
 
   return (
