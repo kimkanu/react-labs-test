@@ -56,7 +56,7 @@ function StateBanner({
   state: (typeof stateOptions)[number];
 }) {
   const iconClassName = {
-    idle: "text-slate-400",
+    idle: "text-slate-400 rotate-45",
     analyzing: "text-sky-500 stroke-3 animate-spin",
     success: "text-green-500",
     error: "text-red-500",
@@ -99,7 +99,13 @@ function StateBanner({
         )}
       >
         {/* Icons */}
-        <Icon className={iconClassName} />
+        <Icon
+          className={cn(
+            state === "error" &&
+              "motion-safe:animate-[500ms_ease-in-out_200ms_shake]",
+            iconClassName,
+          )}
+        />
 
         {/* Texts */}
         <span className={cn("font-semibold", textColorClassName)}>

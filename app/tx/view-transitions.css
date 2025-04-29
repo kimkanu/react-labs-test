@@ -5,3 +5,21 @@
 ::view-transition-new(.width) {
   height: 100%;
 }
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-20%);
+  }
+  50% {
+    transform: translateX(18%);
+  }
+  75% {
+    transform: translateX(-14%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
