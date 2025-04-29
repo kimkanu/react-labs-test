@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "formatter": {
+    "indentWidth": 2,
+    "indentStyle": "space"
+  },
+  "linter": {
+    "rules": {
+      "nursery": {
+        "useSortedClasses": { "level": "error", "fix": "unsafe" }
+      }
+    }
+  }
+}
